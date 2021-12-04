@@ -1,0 +1,78 @@
+class TrieNode
+{
+    public: vector<TrieNode*> v;
+    bool isend;
+    
+    TrieNode()
+    {
+        for (int i=0;i<26;i++)
+        {
+            v.push_back(NULL);
+        }
+        isend=false;
+    }
+    
+};
+class StreamChecker {
+public:
+    TrieNode * root=NULL;
+     vector<char> vtr;
+    int max_length;
+    void inserte(TrieNode* root,string str)
+    {
+        for (int i=0;i<str.length();i++)
+        {
+            int index= str[i]-'a';
+            if (root->v[index]==NULL)
+            {
+                root->v[index]= new TrieNode();
+            }
+            root= root->v[index];
+        }
+        root->isend=true;
+    }
+    StreamChecker(vector<string>& words) {
+        if (root==NULL)
+        {
+            root=new TrieNode();
+            max_length=INT32_MIN;
+        }
+        for (int i=0;i<words.size();i++)
+        {
+            string str= words[i];
+            reverse( str.begin(),str.end());
+            inserte(root,str);
+            if (max_length< str.length())
+            {
+                max_length= str.length();
+            }
+            
+        }
+    }
+    bool check(TrieNode* root)
+    {
+        int i=0;
+        while(i<vtr.size()  && root->isend!=true)
+        {
+            int a= vtr[i]-'a';
+            if (root->v[a]==NULL)  return false;
+            
+            root=root->v[a];
+            i++;
+        }
+        return root->isend==true ? true: false;
+    }
+    bool query(char letter) {
+        
+       vtr.insert(vtr.begin(), letter);
+        if (vtr.size() > max_length)  vtr.pop_back();
+        return check(root);
+        
+    }
+};
+
+/**
+ * Your StreamChecker object will be instantiated and called as such:
+ * StreamChecker* obj = new StreamChecker(words);
+ * bool param_1 = obj->query(letter);
+ */
