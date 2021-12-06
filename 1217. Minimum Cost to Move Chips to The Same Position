@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minCostToMoveChips(vector<int>& pos) {
+        int n= pos.size();
+        unordered_map<int,int> mp;
+        for (int i=0;i<n;i++) mp[pos[i]]++;
+        int ans= INT32_MAX,cost;
+        for (auto x: mp)
+        {
+            cost=0;
+            for (auto y: mp)
+            {
+                if (x.first==y.first)  continue;
+                
+                if (abs(x.first-y.first) %2!=0)  cost+= y.second;
+            }
+            ans=min(ans,cost);
+        }
+        return ans;
+        
+    }
+};
