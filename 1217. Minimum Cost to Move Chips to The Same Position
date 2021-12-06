@@ -1,3 +1,4 @@
+//M1--BRUTE FORCE  O(N^2)  && O(N)
 class Solution {
 public:
     int minCostToMoveChips(vector<int>& pos) {
@@ -17,6 +18,25 @@ public:
             ans=min(ans,cost);
         }
         return ans;
+        
+    }
+};
+
+//M2- SIMPLE LOGIC O(N)  && O(1)
+// Idea is simple either we have to collect all coins to even pos or to odd position ,
+// so just calculate 'mineven' ie the cost when coin has to be moved to even pos from odd
+//' minodd' ie the cost when coin has to be moved from odd to even pos
+// Since all the coins will be at even or odd pos after moving so take min of both.
+class Solution {
+public:
+    int minCostToMoveChips(vector<int>& pos) {
+        int mineven=0,minodd=0;
+        for (int i=0;i<pos.size();i++)
+        {
+            if (pos[i] %2==0)  minodd+=1;
+            if (pos[i] %2!=0)  mineven+=1;
+        }
+        return min(minodd,mineven);
         
     }
 };
