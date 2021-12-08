@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int hat(TreeNode* root,int & ans )
+    {
+        if (root==NULL)  return 0;
+        if (root->left==NULL  && root->right==NULL)  return root->val;
+        
+        int left= hat( root->left,ans);
+        int right= hat( root->right,ans);
+        ans=ans+ abs( left-right);
+        return left+right+root->val;
+        
+    }
+    int findTilt(TreeNode* root) {
+        int ans=0;
+        int a= hat(root,ans);
+        return ans;
+        
+    }
+};
