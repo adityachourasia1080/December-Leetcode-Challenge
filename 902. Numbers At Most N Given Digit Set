@@ -1,0 +1,47 @@
+/*Idea : Calculate the length of Number n         let len= n.length;
+base case 1: all No that can be form from digits ie from length 0 to length  len-1    will always be smaller than len   so directly include then   as in   1 
+case2 : when number that has to formed has same length as len
+			case a: if we find a no which is greater than digits[i][0]  then add pow(digits.length(),len-i-1)  to                          ans
+			          eg like  2,3,5   n=100          then     1<2    so  2_ _ will always be greater
+			case b: if  digits[i][0]== n[i]   no option go to next i to find case a
+			          eg: like 1,2,3   n=120      then   1==1    we cannot say so go for next i ie i=1
+					        for  i==1         then 2==2   so go for next i
+							for  i==2          0<3    so add   pow(digits.length(),len-i-1) to ans  ie pow(3,3-2-1)
+							
+			Base case in case b: if i==len-1  that means we have form same o as n  so total++*/
+class Solution {
+public:
+    int atMostNGivenDigitSet(vector<string>& digits, int n) {
+        string no= to_string(n);
+        int len= no.length();
+        int dlen=digits.size();
+        
+        int total=0;
+        for (int i=1;i<len;i++)
+        {
+           total+= pow(dlen,i);       # ------------------------------  1
+        }
+        
+        
+        for (int i=0;i<len;i++)
+        {
+            bool sameno=false;
+            for (string str: digits)
+            {
+                if (str[0]<no[i])
+                {
+                    total+= pow(dlen,len-i-1);
+                }
+                else if (str[0]==no[i])
+                {
+                   sameno=true;
+                    if (i==len-1)  total++;
+                }
+                
+            }
+            if (!sameno)   return total;
+        }
+        return total;
+        
+    }
+};
